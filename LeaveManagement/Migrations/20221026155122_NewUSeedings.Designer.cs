@@ -4,16 +4,18 @@ using LeaveManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LeaveManagement.Data.Migrations
+namespace LeaveManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221026155122_NewUSeedings")]
+    partial class NewUSeedings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,68 +102,6 @@ namespace LeaveManagement.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87340",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7d53a5bf-1308-4854-8df7-eff79c84fbe2",
-                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "doc@yahoo.com",
-                            EmailConfirmed = true,
-                            FirstName = "DON",
-                            LastName = "DOC",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "DOCS@YAHOO.COM",
-                            NormalizedUserName = "DOC@YAHOO.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA+EV2UC+ZzAfPrPf+nRpaFx9A96G3nCepYYS99btSsngNDl1gkCMVuY7Bw9ZG/z7w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f66b7a6-d0f4-4d64-bdb8-bbaa4fe89527",
-                            TwoFactorEnabled = false,
-                            UserName = "doc@yahoo.com"
-                        },
-                        new
-                        {
-                            Id = "bf23ce0b - 7c06 - 3c70 - a124 - 78b4dbd87230",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4f555b21-dde6-4cd0-825e-ca3cce650f4f",
-                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Jojoe@yahoo.com",
-                            EmailConfirmed = true,
-                            FirstName = "JOE",
-                            LastName = "JO",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "JOJOE@YAHOO.COM",
-                            NormalizedUserName = "JOJOE@YAHOO.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHG1nj4Iw1pvPjQSNywTSuPt5JdP7isswe5dq/NJoMfovfT7g+t7I6yhB+y+uhqpXw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "2dc31e01-9e28-47c9-b2df-3464d02119f4",
-                            TwoFactorEnabled = false,
-                            UserName = "jojoe@YAHOO.COM"
-                        },
-                        new
-                        {
-                            Id = "93fd5a9f - 677a - 4998 - a010 - 16b997082282",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d141208d-1b5a-44d7-b548-10ebf8c16617",
-                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "yus@yahoo.com",
-                            EmailConfirmed = true,
-                            FirstName = "BABATUNDE",
-                            LastName = "Yusuf",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "YUS@YAHOO.COM",
-                            NormalizedUserName = "YUS@YAHOO.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEB0YferQoSOApg65Xa3SsbV3A1w/0TldYV1dlgif/7B/FHJcnKoHhZ/yI7cYPnDA+w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "66be1e84-3539-4dc8-b10f-8f857d4521b1",
-                            TwoFactorEnabled = false,
-                            UserName = "yus@YAHOO.COM"
-                        });
                 });
 
             modelBuilder.Entity("LeaveManagement.Data.LeaveAllocation", b =>
@@ -249,29 +189,6 @@ namespace LeaveManagement.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87311",
-                            ConcurrencyStamp = "b4972f8f-58ba-4435-91f1-901d570faace",
-                            Name = "Adminstrator",
-                            NormalizedName = "ADMINSTRATOR"
-                        },
-                        new
-                        {
-                            Id = "bf65ce0b-8c04-4c70-a124-78b4dbd87613",
-                            ConcurrencyStamp = "93e02120-37eb-434f-a066-2feee03c6689",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "bf65ce0b-8c04-4c70-a124-78b4dbd87666",
-                            ConcurrencyStamp = "bb42a584-a52f-4cef-a289-8d8b290b4979",
-                            Name = "IT",
-                            NormalizedName = "IT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -361,23 +278,6 @@ namespace LeaveManagement.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87340",
-                            RoleId = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87311"
-                        },
-                        new
-                        {
-                            UserId = "bf23ce0b - 7c06 - 3c70 - a124 - 78b4dbd87230",
-                            RoleId = "bf65ce0b-8c04-4c70-a124-78b4dbd87613"
-                        },
-                        new
-                        {
-                            UserId = "93fd5a9f - 677a - 4998 - a010 - 16b997082282",
-                            RoleId = "bf65ce0b-8c04-4c70-a124-78b4dbd87666"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -1,6 +1,11 @@
+using LeaveManagement.Configuration;
 using LeaveManagement.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using LeaveManagement.Repository;
+using LeaveManagement.Repositories;
+using LeaveManagement.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +15,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true) // Declaring that Identity
+                                                                                                        // shd be relative to EMployee Model
+
+    .AddRoles<IdentityRole>()  //Registering Role
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+//Registering IGenericRepository and ILeaveTypeRepository respectively.
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+
+//Setting restrictions
+builder.Services.AddAuthorization();
+
+
+//Registering automapper
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 var app = builder.Build();
 
