@@ -14,12 +14,13 @@ using LeaveManagement.Constants;
 
 namespace LeaveManagement.Controllers
 {
-    [Authorize(Roles = Roles.User)]
+    [Authorize(Roles = "Administrator, Accounts")]
     public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
+
 
 
         //With Repository design pattern, Controller does not interact with DatabaseContext as seen below.

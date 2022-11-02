@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using LeaveManagement.Constants;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LeaveManagement.Areas.Identity.Pages.Account
 {
@@ -31,13 +32,16 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Employee> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<Employee> userManager,
             IUserStore<Employee> userStore,
             SignInManager<Employee> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +49,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -70,6 +75,9 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        
+               
+        
         public class InputModel
         {
             /// <summary>
@@ -95,6 +103,12 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             [Display(Name = "Date Joined")]
             public DateTime DateOfJoined { get; set; }
 
+            /*[Display(Name = "Role")]
+            public IEnumerable<SelectListItem> RoleList { get; set; }
+            public string SelectedRole { get; set; }
+*/
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -113,11 +127,18 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            //New item
+            public string Name { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //New item
+            ViewData["roles"] = _roleManager.Roles.ToList();
+            
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -125,6 +146,10 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+
+            //New item
+            var role = _roleManager.FindByIdAsync(Input.Name).Result;
+            
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -137,7 +162,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
                 user.DateOfBirth = Input.DateOfBirth;
                 user.DateJoined = Input.DateOfJoined;
 
-
+                //Changed RoleSeed.Role to Input.Password
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -145,7 +170,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     //Assigning role at registration
-                    await _userManager.AddToRoleAsync(user, Roles.User);
+                    await _userManager.AddToRoleAsync(user, role.Name);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -174,6 +199,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            ViewData["roles"] = _roleManager.Roles.ToList();
 
             // If we got this far, something failed, redisplay form
             return Page();

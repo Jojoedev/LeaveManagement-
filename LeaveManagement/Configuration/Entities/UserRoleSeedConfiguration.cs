@@ -12,7 +12,7 @@ namespace LeaveManagement.Configuration.Entities
                 (
                 new IdentityUserRole<string>
                 {
-                    //Admin
+                    //Admin DOC
                     RoleId = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87311",
                     UserId = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87340"
                 },
@@ -26,7 +26,12 @@ namespace LeaveManagement.Configuration.Entities
                 {
                     RoleId = "bf65ce0b-8c04-4c70-a124-78b4dbd87666",
                     UserId = "93fd5a9f - 677a - 4998 - a010 - 16b997082282"
-                }
+                },
+                 new IdentityUserRole<string>
+                 {
+                     RoleId = "bf65ce0b-8c04-4c70-a124-78b4dbd87667",
+                     UserId = "93fd5a9f - 677a - 4998 - a010 - 16b997082241"
+                 }
 
                 );
         }

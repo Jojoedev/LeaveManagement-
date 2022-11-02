@@ -19,7 +19,7 @@ namespace LeaveManagement.Configuration.Entities
 
                         new Employee
                         {
-                           
+                          
                             Id = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87340",
                             Email = "doc@yahoo.com",
                             NormalizedEmail = "DOCS@YAHOO.COM",
@@ -32,7 +32,8 @@ namespace LeaveManagement.Configuration.Entities
 
                         },
                         new Employee
-                        {
+                        { 
+                            
 
                             Id = "bf23ce0b - 7c06 - 3c70 - a124 - 78b4dbd87230",
                             Email = "Jojoe@yahoo.com",
@@ -46,7 +47,7 @@ namespace LeaveManagement.Configuration.Entities
                         },
                         
                         new Employee
-                        {
+                        { 
 
                             Id = "93fd5a9f - 677a - 4998 - a010 - 16b997082282",
                             Email = "yus@yahoo.com",
@@ -58,8 +59,22 @@ namespace LeaveManagement.Configuration.Entities
                             LastName = "Yusuf",
                             PasswordHash = hasher.HashPassword(null, "P@ssword1"),
                             EmailConfirmed = true
+                        },
+                        new Employee
+                        {
+
+                            Id = "93fd5a9f - 677a - 4998 - a010 - 16b997082241",
+                            Email = "accts@yahoo.com",
+                            NormalizedEmail = "ACCTS@YAHOO.COM",
+                            NormalizedUserName = "ACCTS@YAHOO.COM",
+                            UserName = "ACCTS@YAHOO.COM",
+
+                            FirstName = "Friday",
+                            LastName = "Onuh",
+                            PasswordHash = hasher.HashPassword(null, "P@ssword1"),
+                            EmailConfirmed = true
                         }
-                        
+
 
 
                 );

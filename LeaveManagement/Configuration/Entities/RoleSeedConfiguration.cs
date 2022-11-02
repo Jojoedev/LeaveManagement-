@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static LeaveManagement.Areas.Identity.Pages.Account.RegisterModel;
 
 namespace LeaveManagement.Configuration.Entities
 {
@@ -15,9 +16,8 @@ namespace LeaveManagement.Configuration.Entities
 
                 { //ADMIN
                     Id = "bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87311",
-                    Name = Roles.Adminstrator,
-                    NormalizedName = Roles.Adminstrator.ToUpper()
-                    // bf88ce0b - 8c06 - 4c70 - a124 - 78b4dbd87300
+                    Name = RolesSeed.Administrator,
+                    NormalizedName = RolesSeed.Administrator.ToUpper()
 
                 },
                 new IdentityRole
@@ -25,20 +25,27 @@ namespace LeaveManagement.Configuration.Entities
                 {
                     //USER
                     Id = "bf65ce0b-8c04-4c70-a124-78b4dbd87613",
-                    Name = Roles.User,
-                    NormalizedName = Roles.User.ToUpper()
-
-
+                    Name = RolesSeed.User,
+                    NormalizedName = RolesSeed.User.ToUpper(),
+                   
                 },
                  new IdentityRole
 
                  {
                      //IT
                      Id = "bf65ce0b-8c04-4c70-a124-78b4dbd87666",
-                     Name = Roles.IT,
-                     NormalizedName = Roles.IT.ToUpper()
+                     Name = RolesSeed.IT,
+                     NormalizedName = RolesSeed.IT.ToUpper()
+                 },
 
-                 }
+                  new IdentityRole
+
+                  {
+                      //Accounts
+                      Id = "bf65ce0b-8c04-4c70-a124-78b4dbd87667",
+                      Name = RolesSeed.Accounts,
+                      NormalizedName = RolesSeed.Accounts.ToUpper()
+                  }
 
 
           ); 
