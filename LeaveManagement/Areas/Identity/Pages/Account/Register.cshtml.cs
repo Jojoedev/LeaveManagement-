@@ -129,14 +129,18 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
 
-            //New item
+            //New item 
+            //This is to populate Role name in Register UI.
             public string Name { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            //New item
+            //New item 
+            //ViewData is used to pass data from Controller to View. ViewData has key-value pairs.
+            //ViewData key of roles is assign to List of Roles in _roleManager.
+            //Below code is used to pass list of Roles in the Register UI when OnGet action is called.
             ViewData["roles"] = _roleManager.Roles.ToList();
             
             ReturnUrl = returnUrl;

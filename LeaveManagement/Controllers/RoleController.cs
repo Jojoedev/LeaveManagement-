@@ -18,7 +18,7 @@ namespace LeaveManagement.Controllers
             _roleManager = roleManager;
             
         }
-
+        
         public IActionResult Index()
         {
           var roleList  = _roleManager.Roles.ToList();

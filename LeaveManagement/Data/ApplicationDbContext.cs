@@ -11,7 +11,7 @@ namespace LeaveManagement.Data
             : base(options)
         {
         }
-
+/*
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -19,7 +19,7 @@ namespace LeaveManagement.Data
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
         }
-
+*/
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
         public DbSet<LeaveManagement.Data.RoleModel> RoleModel { get; set; }
