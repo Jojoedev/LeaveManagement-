@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LeaveManagement.Controllers
 {
-    [Authorize(Roles = "Administrator, Accounts")]
+    [Authorize(Roles = "Administrator, Accounts, Developer")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -22,6 +22,7 @@ namespace LeaveManagement.Controllers
         public IActionResult Index()
         {
           var roleList  = _roleManager.Roles.ToList();
+            
             return View(roleList);
         }
 
@@ -64,6 +65,13 @@ namespace LeaveManagement.Controllers
         }*/
 
         
-        
+        public async Task<IActionResult> Delete(string id)
+        {
+           var Role = _roleManager.Roles.Where(n => n.Id == id).FirstOrDefault();
+                       await _roleManager.DeleteAsync(Role);
+
+            return RedirectToAction("Index");
+            
+        }
     }
 }

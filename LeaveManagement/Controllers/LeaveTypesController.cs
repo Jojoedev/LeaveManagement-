@@ -14,7 +14,7 @@ using LeaveManagement.Constants;
 
 namespace LeaveManagement.Controllers
 {
-    [Authorize(Roles = "Administrator, Accounts")]
+    [Authorize(Roles = "Administrator, Accounts, Developer")]
     public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,8 +23,10 @@ namespace LeaveManagement.Controllers
 
 
 
-        //With Repository design pattern, Controller does not interact with DatabaseContext as seen below.
-        //This is important that there cud be change of database and such change would not affect the operations of the controllers. 
+        //With Repository design pattern, Controller does not interact with
+        //DatabaseContext as seen below.
+        //This is important that there cud be change of database and such
+        //change would not affect the operations of the controllers. 
 
 
         /*public LeaveTypesController(ApplicationDbContext context, IMapper mapper)
@@ -34,10 +36,11 @@ namespace LeaveManagement.Controllers
            
         }*/
 
-        
-        //IleaveTypeRepository is a specific to LeaveType alone, it is registered in the program.cs file and hence injected as below to 
+
+        //IleaveTypeRepository is a specific to LeaveType alone, it is registered in the program.cs file
+        //and hence injected as below to 
         //to communication with DB instead of DBContext earlier set.
-        
+
 
         public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository, IMapper mapper)
         {
@@ -48,16 +51,16 @@ namespace LeaveManagement.Controllers
         // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
-            
+
             var leaveType = _mapper.Map<List<LeaveTypeVM>>(await _leaveTypeRepository.GetAllAsync());
-            
-              return View(leaveType);
+
+            return View(leaveType);
         }
 
         // GET: LeaveTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var leaveType =  await _leaveTypeRepository.GetAsync(id);
+            var leaveType = await _leaveTypeRepository.GetAsync(id);
 
             if (leaveType == null)
             {
@@ -69,6 +72,7 @@ namespace LeaveManagement.Controllers
         }
 
         // GET: LeaveTypes/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -79,6 +83,7 @@ namespace LeaveManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
         {
             if (ModelState.IsValid)
@@ -90,6 +95,7 @@ namespace LeaveManagement.Controllers
             return View(leaveTypeVM);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: LeaveTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -108,7 +114,8 @@ namespace LeaveManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,LeaveTypeVM leaveTypeVM)
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Edit(int id, LeaveTypeVM leaveTypeVM)
         {
             if (id != leaveTypeVM.Id)
             {
@@ -117,14 +124,14 @@ namespace LeaveManagement.Controllers
 
             if (ModelState.IsValid)
             {
-               
-               var leaveType = _mapper.Map<LeaveType>(leaveTypeVM);
-                await _leaveTypeRepository.UpdateAsync(leaveType);               
+
+                var leaveType = _mapper.Map<LeaveType>(leaveTypeVM);
+                await _leaveTypeRepository.UpdateAsync(leaveType);
                 return RedirectToAction(nameof(Index));
             }
             return View(leaveTypeVM);
         }
-
+        [Authorize(Roles = "Administrator")]
         // GET: LeaveTypes/Delete/5
         public async Task<IActionResult?> Delete(int? id)
         {
@@ -133,18 +140,18 @@ namespace LeaveManagement.Controllers
                 return NotFound();
             }*/
 
-           /* var leaveType = _mapper.Map<LeaveTypeVM>(await _context.LeaveTypes
-                .FirstOrDefaultAsync(m => m.Id == id));
-            if (leaveType == null)
-            {
-                return NotFound();
-            }
+            /* var leaveType = _mapper.Map<LeaveTypeVM>(await _context.LeaveTypes
+                 .FirstOrDefaultAsync(m => m.Id == id));
+             if (leaveType == null)
+             {
+                 return NotFound();
+             }
 
-            return View(leaveType);*/
+             return View(leaveType);*/
 
 
             var DeleteLeaveType = _mapper.Map<LeaveTypeVM>(await _leaveTypeRepository.GetAsync(id));
-            if(id != DeleteLeaveType.Id || id == null)
+            if (id != DeleteLeaveType.Id || id == null)
             {
                 return null;
             }
@@ -155,6 +162,7 @@ namespace LeaveManagement.Controllers
         // POST: LeaveTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             /*if (_context.LeaveTypes == null)
@@ -170,8 +178,8 @@ namespace LeaveManagement.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));*/
 
-          await _leaveTypeRepository.DeleteAsync(id);
-           return RedirectToAction(nameof(Index));
+            await _leaveTypeRepository.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
 
 
         }
@@ -179,6 +187,13 @@ namespace LeaveManagement.Controllers
         private async Task<bool> LeaveTypeExistsAsync(int id)
         {
             return await _leaveTypeRepository.Exists(id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AllocateLeave(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,16 +4,18 @@ using LeaveManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LeaveManagement.Data.Migrations
+namespace LeaveManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230530133226_Changing")]
+    partial class Changing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +167,7 @@ namespace LeaveManagement.Data.Migrations
                     b.ToTable("LeaveTypes");
                 });
 
-            modelBuilder.Entity("LeaveManagement.Data.Request", b =>
+            modelBuilder.Entity("LeaveManagement.Data.MakingRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,7 +198,7 @@ namespace LeaveManagement.Data.Migrations
 
                     b.HasIndex("RequesterId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("RequestDb");
                 });
 
             modelBuilder.Entity("LeaveManagement.Data.Requester", b =>
@@ -364,7 +366,7 @@ namespace LeaveManagement.Data.Migrations
                     b.Navigation("LeaveType");
                 });
 
-            modelBuilder.Entity("LeaveManagement.Data.Request", b =>
+            modelBuilder.Entity("LeaveManagement.Data.MakingRequest", b =>
                 {
                     b.HasOne("LeaveManagement.Data.Requester", "Requester")
                         .WithMany()

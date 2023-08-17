@@ -75,8 +75,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        
-               
+                    
         
         public class InputModel
         {
@@ -102,12 +101,7 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             [Display(Name = "Date Joined")]
             public DateTime DateOfJoined { get; set; }
-
-            /*[Display(Name = "Role")]
-            public IEnumerable<SelectListItem> RoleList { get; set; }
-            public string SelectedRole { get; set; }
-*/
-
+                      
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -130,10 +124,11 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
 
 
             //New item 
-            //This is to populate Role name in Register UI.
+            //This is to add Role name in Register UI.
             public string Name { get; set; }
         }
 
+        public SelectList roles { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -141,7 +136,14 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
             //ViewData is used to pass data from Controller to View. ViewData has key-value pairs.
             //ViewData key of roles is assign to List of Roles in _roleManager.
             //Below code is used to pass list of Roles in the Register UI when OnGet action is called.
-            ViewData["roles"] = _roleManager.Roles.ToList();
+
+            //ViewData["roles"] = _roleManager.Roles.ToList();
+
+
+            //roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+
+            roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+
             
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -151,8 +153,14 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            //New item
-            var role = _roleManager.FindByIdAsync(Input.Name).Result;
+            //New item. This is linking name property in Roles Class with corresponding name property in InputModel Class
+            //for bidding on Post.
+            //Upon selection of Role type from list of roles, _roleManager searches Roles Db for the Id of the
+            //selected Roles for match.
+           
+            var role = _roleManager.FindByIdAsync(Input.Name).Result; 
+                   
+           
             
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -175,6 +183,8 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
 
                     //Assigning role at registration
                     await _userManager.AddToRoleAsync(user, role.Name);
+
+                    //await _userManager.AddToRoleAsync(user, RolesSeed.User);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -203,7 +213,10 @@ namespace LeaveManagement.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            ViewData["roles"] = _roleManager.Roles.ToList();
+            //ViewData["roles"] = _roleManager.Roles.ToList();
+
+            
+            roles = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
 
             // If we got this far, something failed, redisplay form
             return Page();

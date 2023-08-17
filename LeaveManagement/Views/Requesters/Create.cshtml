@@ -1,0 +1,19 @@
+﻿@model Requester
+ 
+@{
+}
+
+<div>
+    <form method="post">
+        <div class="form-group">
+            <div class="control-label">Requester </div>
+            <input asp-for="@Model.Name" class="form-control"></input>
+        </div>
+
+        <div>
+    <input type="submit" name="name" value="Submit" class="btn btn-outline-primary" placeholder="Requesting Department" />
+    <a href="/Requesters/Index" class="btn btn-outline-secondary">Back to List</a>
+     </div>
+    </form>
+    
+</div>

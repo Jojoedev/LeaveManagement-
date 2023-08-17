@@ -13,14 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true) // Declaring that Identity
-                                                                                                        // shd be relative to EMployee Model
+                                                                                                        // shd be relative to Employee Model
 
     .AddRoles<IdentityRole>()  //Registering Role
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
+
 
 
 //Registering IGenericRepository and ILeaveTypeRepository respectively.

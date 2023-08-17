@@ -1,0 +1,51 @@
+﻿@model Request 
+
+@{
+   
+}
+@{
+    ViewData["Title"] = "Create";
+
+}
+<p>
+    <a asp-action="Create" class="btn btn-success"> <i class="fa-solid fa-plus"></i></a>
+</p>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+    <label asp-for="@Model.Description" class="control-label"></label>
+    <input asp-for="@Model.Description" class="form-control" />
+    </div> 
+
+    <div class="form-group">
+    <label asp-for="@Model.Amount" class="control-label"></label>
+    <input asp-for="@Model.Amount" class="form-control" />
+    </div>
+
+     <div class="form-group">
+    <label asp-for="@Model.ImageFile" class="control-label"></label>
+    <input asp-for="@Model.ImageFile" class="form-control" accept="Image/pdf" />
+    </div>
+
+    <br />
+
+    <div class="form-group">
+    <label asp-for="@Model.RequesterId" class="control-label"></label>
+    <select asp-for="@Model.RequesterId" asp-items="@ViewBag.NewRequester">
+        <option>Select Department</option>
+    </select>
+    </div>
+
+    
+
+    
+    <br />
+    <div class="form-group">
+    @*<label asp-for="@Model.RequestDate" class="control-label"></label>
+    <input asp-for="@Model.RequestDate = DateTime.Now" class="form-control" />*@
+    </div>
+
+      <div> 
+    <input type="submit" value="Submit" name="" class="btn btn-primary"/> 
+  <a href="/Request/Index" class="btn btn-info">Back to List</a> </div>
+</form>
